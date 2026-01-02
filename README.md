@@ -1,10 +1,8 @@
 # Caesars Hotel Reservation
 
 A desktop hotel reservation system built with Python and Tkinter for **Caesars Hotels & Resorts**
-It supports user sign up/login, room selection, booking with date picker, SQLite storage, and email booking confirmations
 
 ## Features
-
 - **Landing screen**
   - Full screen welcome page with background image
   - Quick access to Sign Up and Login

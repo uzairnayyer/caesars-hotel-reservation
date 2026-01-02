@@ -1,0 +1,3 @@
+Pillow
+tkcalendar
+Python Standard Libraries: tkinter, sqlite3, smtplib, email, webbrowser & os

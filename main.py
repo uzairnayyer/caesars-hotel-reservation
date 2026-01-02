@@ -14,6 +14,13 @@ from paths import image_path, doc_path, DB_PATH, ensure_data_dir
 
 ensure_data_dir() 
 
+def center_window(window, width, height):
+    window.update_idletasks()
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+    x = (screen_width // 2) - (width // 2)
+    y = (screen_height // 2) - (height // 2)
+    window.geometry(f"{width}x{height}+{x}+{y}")
 
 class HotelReservationApp:
     def __init__(self):
@@ -103,9 +110,9 @@ class HotelReservationApp:
     # Signup page
     def sign_up(self):
         c = Toplevel()
-        c.geometry("500x500")
         c.title("SIGN UP")
         c.configure(bg="#F0F0FF")
+        center_window(c, 500,500)
 
         icon = tk.PhotoImage(file=image_path("book.png"))
         c.iconphoto(True, icon)
@@ -181,9 +188,9 @@ class HotelReservationApp:
     # Login page
     def login(self):
         b = Toplevel()
-        b.geometry("330x355")
         b.title("LOGIN")
         b.configure(bg="#F0F0FF")
+        center_window(b, 330, 355)  # Center the window
 
         icon = tk.PhotoImage(file=image_path("book.png"))
         b.iconphoto(True, icon)
@@ -195,11 +202,17 @@ class HotelReservationApp:
         logo_label.image = login_logo_photo
         logo_label.pack(pady=(10, 0))
 
+        error_label = Label(b, text="", fg="red", font=("Arial", 10, "bold"), bg="#F0F0FF")
+        error_label.place(x=50, y=260)
+
         def LOGin():
             x = e1.get()
             y = e2.get()
+
+            error_label.config(text="")
+
             if x == "" or y == "":
-                messagebox.showinfo('message', "Fill the Username and Password")
+                error_label.config(text="Please fill Username and Password")
                 return
 
             conn = sqlite3.connect(DB_PATH)
@@ -215,10 +228,10 @@ class HotelReservationApp:
                 b.destroy()
                 self.hotel_log()
             else:
-                messagebox.showerror('error', "Invalid Username or Password")
+                error_label.config(text="⚠ Invalid Username or Password")
 
-        Label(b, text="Username", font=("Arial", 10, "bold")).place(x=50, y=140)
-        Label(b, text="Password", font=("Arial", 10, "bold")).place(x=50, y=180)
+        Label(b, text="Username", font=("Arial", 10, "bold"), bg="#F0F0FF").place(x=50, y=140)
+        Label(b, text="Password", font=("Arial", 10, "bold"), bg="#F0F0FF").place(x=50, y=180)
         e1 = Entry(b, bd=3)
         e1.place(x=130, y=140)
         e2 = Entry(b, bd=3, show='*')
@@ -293,6 +306,9 @@ class HotelReservationApp:
         Button(d, text="Rs. 45,000 / night", **bnt_style).place(x=1400, y=380)
 
         def hotel_log_A(previous_window):
+            if previous_window:
+                previous_window.destroy()
+
             f = Toplevel()
             f.state('zoomed')
             f.geometry("1920x1080")

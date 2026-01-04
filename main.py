@@ -6,6 +6,7 @@ from PIL import Image, ImageTk
 from tkcalendar import Calendar
 import os
 import webbrowser
+from datetime import date
 
 from styles import bnt_style, heading_style
 from email_service import send_booking_email
@@ -434,8 +435,9 @@ class HotelReservationApp:
             def get_selected_date():
                 selected_date = cal.get_date()
                 date_var.set(selected_date)
-
-            cal = Calendar(e, selectmode="day", year=2025, month=12, day=29)
+            
+            today = date.today()
+            cal = Calendar(e, selectmode="day", year=today.year, month=today.month, day=today.day)
             cal.place(x=300, y=200)
 
             select_date_button = Button(e, text="SELECT DATE",

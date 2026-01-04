@@ -437,7 +437,14 @@ class HotelReservationApp:
                 date_var.set(selected_date)
             
             today = date.today()
-            cal = Calendar(e, selectmode="day", year=today.year, month=today.month, day=today.day)
+            cal = Calendar(
+                e, 
+                selectmode="day", 
+                year=today.year, 
+                month=today.month, 
+                day=today.day, 
+                mindate=today
+            )
             cal.place(x=300, y=200)
 
             select_date_button = Button(e, text="SELECT DATE",
